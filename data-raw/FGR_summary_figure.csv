@@ -1,0 +1,84 @@
+Species,Scientific.name,Provenance.trials,Traits.studied,Genomic.characterisation,Understanding.of.diversity,In-situ.conservation.GCU,Ex-situ.conservation.seed.bank,Ex-situ.conservation.clone.bank
+"Maple, field",Acer campestre,,,,Insufficient,,Yes,
+Sycamore,Acer pseudoplatanus,Yes,Form,,Insufficient,,,Yes
+Sycamore,Acer pseudoplatanus,Yes,Budburst,,Insufficient,,,Yes
+"Alder, common",Alnus glutinosa,,,Yes,Insufficient,,Yes,
+"Barberry, common",Berberis vulgaris,,,,Insufficient,,,
+"Birch, dwarf",Betula nana,,,Yes,Insufficient,,Yes,
+"Birch, silver",Betula pendula,Yes,Phenology,Yes,High,Yes,Yes,Yes
+"Birch, silver",Betula pendula,Yes,Form,,High,Yes,Yes,Yes
+"Birch, silver",Betula pendula,Yes,Leaf morphology,,High,Yes,Yes,Yes
+"Birch, silver",Betula pendula,Yes,Disease response,,High,Yes,Yes,Yes
+"Birch, downy",Betula pubescens,,,,Insufficient,,Yes,
+Hornbeam,Carpinus betulus,,,,Insufficient,,Yes,
+Sweet chestnut,Castanea sativa,,,Yes,Insufficient,,,Yes
+Dogwood,Cornus sanguinea,,,,Insufficient,,Yes,
+Hazel,Corylus avellana,,,Yes,Insufficient,,Yes,
+"Hawthorn, midland",Crataegus laevigata,,,,Insufficient,,Yes,
+Hawthorn,Crataegus monogyna,Yes,Disease resistance,Yes,Insufficient,,Yes,
+Hawthorn,Crataegus monogyna,Yes,Branching,,Insufficient,,Yes,
+Hawthorn,Crataegus monogyna,Yes,Thorns,,Insufficient,,Yes,
+Spindle,Euonymus europaeus,,,,Insufficient,,Yes,
+Beech,Fagus sylvatica,Yes,Form,Yes,Insufficient,,Yes,
+Beech,Fagus sylvatica,Yes,Carbon isotope ratio,,Insufficient,,Yes,
+Beech,Fagus sylvatica,Yes,Dendrochronology,,Insufficient,,Yes,
+Alder buckthorn,Frangula alnus,,,,Insufficient,,,
+Ash,Fraxinus excelsior,Yes,Form,Yes,High,Yes,Yes,Yes
+Ash,Fraxinus excelsior,Yes,Phenology,,High,Yes,Yes,
+Ash,Fraxinus excelsior,Yes,Disease resistance,,High,Yes,Yes,
+Holly,Ilex aquifolium,,,Yes,Insufficient,,Yes,
+Juniper,Juniperus communis,Yes,Form,Yes,Insufficient,,Yes,
+"Privet, wild",Ligustrum vulgare,,,,Insufficient,,Yes,
+"Apple, wild",Malus sylvestris,,,Yes,Insufficient,Yes,Yes,
+"Pine, Scots",Pinus sylvestris,Yes,Form,Yes,High,Yes,Yes,
+"Pine, Scots",Pinus sylvestris,Yes,Seedling morphology,,High,Yes,,
+"Pine, Scots",Pinus sylvestris,Yes,Root condition,,High,Yes,,
+"Pine, Scots",Pinus sylvestris,Yes,Root frost hardiness,,High,Yes,,
+"Pine, Scots",Pinus sylvestris,Yes,Bud dry matter,,High,Yes,,
+"Pine, Scots",Pinus sylvestris,Yes,Bud burst,,High,Yes,,
+"Pine, Scots",Pinus sylvestris,Yes,Susceptibility to disease inoculation,,High,Yes,,
+"Pine, Scots",Pinus sylvestris,Yes,Chlorophyll fluorescense,,High,Yes,,
+"Pine, Scots",Pinus sylvestris,Yes,Needle anatomy,,High,Yes,,
+"Poplar, black",Populus nigra subsp. betulifolia,,,Yes,Insufficient,,Yes,
+Aspen,Populus tremula,Yes,Form,Yes,Insufficient,,Yes,
+"Cherry, wild",Prunus avium,Yes,Budburst,Yes,Insufficient,,Yes,Yes
+"Cherry, wild",Prunus avium,Yes,Form,,Insufficient,,,
+"Cherry, bird",Prunus padus,,,,Insufficient,,Yes,
+Blackthorn,Prunus spinosa,,,Yes,Insufficient,,Yes,
+"Pear, wild",Pyrus communis sens. Lat.,,,,Insufficient,,,
+"Oak, sessile",Quercus petraea,Yes,Budburst,Yes,Medium,Yes,,Yes
+"Oak, sessile",Quercus petraea,Yes,Form,,Medium,Yes,,Yes
+"Oak, sessile",Quercus petraea,Yes,Squirrel damage,,Medium,Yes,,Yes
+"Oak, sessile",Quercus petraea,Yes,Carbon isotope ratio,,Medium,Yes,,Yes
+"Oak, sessile",Quercus petraea,Yes,Dendrochronology,,Insufficient,Yes,,Yes
+"Oak, pedunculate",Quercus robur,Yes,Budburst,Yes,Insufficient,Yes,,Yes
+"Oak, pedunculate",Quercus robur,Yes,Form,,Insufficient,Yes,,Yes
+"Oak, pedunculate",Quercus robur,Yes,Squirrel damage,,Insufficient,Yes,,Yes
+"Oak, pedunculate",Quercus robur,Yes,Carbon isotope ratio,,Insufficient,Yes,,Yes
+"Oak, pedunculate",Quercus robur,Yes,Dendrochronology,,Insufficient,Yes,,Yes
+"Buckthorn, purging",Rhamnus cathartica,,,,Insufficient,,,
+"Willow, white",Salix alba,,,,Insufficient,,,
+"Willow, eared",Salix aurita,,,,Insufficient,,Yes,
+"Willow, grey",Salix cinerea,,,,Insufficient,,Yes,
+"Willow, crack",Salix fragilis,,,,Insufficient,,,
+"Willow, dark-leaved",Salix myrsinifolia,,,,Insufficient,,Yes,
+"Willow, bay",Salix pentandra,,,,Insufficient,,Yes,
+"Willow, tea-leaved",Salix phylicifolia,,,,Insufficient,,Yes,
+"Willow, purple",Salix purpurea,,,,Insufficient,,,
+"Willow, osier",Salix viminalis,,,,Insufficient,,,
+"Willow, goat",Saliz caprea,,,,Insufficient,,,
+Elder,Sambucus nigra,,,,Insufficient,,Yes,
+"Whitebeam, common",Sorbus aria sens. str.,,,,Insufficient,,Yes,
+Rowan,Sorbus aucuparia,Yes,Bud break,Yes,High,,Yes,
+Rowan,Sorbus aucuparia,Yes,Leaf senesence,,High,,Yes,
+Rowan,Sorbus aucuparia,Yes,Stomatal size,,High,,Yes,
+Rowan,Sorbus aucuparia,Yes,Stomatal density,,High,,Yes,
+Rowan,Sorbus aucuparia,Yes,Leaf morphology,,High,,Yes,
+Rowan,Sorbus aucuparia,Yes,Fruiting,,High,,Yes,
+Wild service,Sorbus torminalis,,,,Insufficient,,Yes,
+Yew,Taxus baccata,,,Yes,Insufficient,,Yes,
+"Lime, small-leaved",Tilia cordata,,,Yes,Insufficient,,Yes,
+"Lime, large-leaved",Tilia platyphyllos,,,Yes,Insufficient,,Yes,
+"Elm, wych",Ulmus glabra,,,,Insufficient,,Yes,
+Wayfaring tree,Viburnum lantana,,,,Insufficient,,Yes,
+Guelder rose,Viburnum opulus,,,,Insufficient,,Yes,
