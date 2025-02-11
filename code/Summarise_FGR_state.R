@@ -10,8 +10,8 @@ library(igraph)
 
 ### dirs -----------------------------------------------------------------------
 
-wd <- "C:/Users/vbu/OneDrive - the Woodland Trust/Data-analysis/"
-dirData <- paste0(wd,"FGR_summary/")
+wd <- "C:/Users/vbu/OneDrive - the Woodland Trust/Data-analysis/Forest-Genetic-Resources/"
+dirData <- paste0(wd,"data-raw/")
 
 ### read in data ---------------------------------------------------------------
 
