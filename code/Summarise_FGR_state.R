@@ -186,17 +186,47 @@ FGR.summary <- df.FGR %>%
 
 # simple option
 
-ggplot(FGR.summary, 
-       aes(Seed.sources, Species, fill = Conservation)) +
+ggplot(FGR.summary)+#, 
+       #aes(Seed.sources, Species, fill = Conservation)) +
   # This segment represents the vertical lines
   #geom_segment(aes(x = Species, xend = Species, y = 0, yend = Seed.sources.count), linewidth = 1) +
   # Add points on the end of each line
-  geom_col(aes(x = Species, y = Seed.sources)) +
+  geom_col(aes(x = Species, y = Total.seed.stands, fill = Conservation)) +
   #geom_text(data=label_data, aes(x=id, y=coverage+2, label=Species, hjust=hjust), color="black", fontface="bold",alpha=0.6, size=2.5, angle= label_data$angle, inherit.aes = FALSE ) +
   #scale_color_paletteer_d(`"awtools::a_palette"`)+
   coord_polar(start = 0)+
   #facet_wrap(~Genomic.char)+
   theme_minimal()
 
+### v2 -------------------------------------------------------------------------
+
+df.FGR |> 
+  mutate(seed.stands = ifelse(Seed.stands.count > 0, 1, NA),
+         seed.orchards = ifelse(Seed.orchards.count > 0, 1, NA),
+         seed.none = ifelse(is.na(seed.stands & seed.orchards), 1, NA),
+         genomic.molecular = ifelse(Molecular.studies > 0, 1, NA),
+         genomic.trial = ifelse(Common.garden.expts > 0, 1, NA),
+         genomic.none = ifelse(is.na(genomic.molecular) & is.na(genomic.trial), 1, NA),
+         consv.in.situ = ifelse(Gene.conservation.units > 0, 1, NA),
+         consv.ex.situ = ifelse(Ex.situ.germplasm >= 0 | Ex.situ.collections.living >= 0, 1, NA),
+         consv.both = ifelse(consv.in.situ > 0 & consv.ex.situ > 0, 1, NA),
+         consv.none = ifelse(is.na(consv.in.situ) & is.na(consv.ex.situ) & is.na(consv.both), 1, NA)) |> 
+  select(Species, 
+         seed.stands, seed.orchards, seed.none,
+         genomic.molecular, genomic.trial, genomic.none,
+         consv.in.situ, consv.ex.situ, consv.none)|> 
+  pivot_longer(cols = starts_with("seed"),
+               names_to = "Seed.sources",
+               values_to = "Source.count") |> 
+  pivot_longer(cols = starts_with("genomic"),
+               names_to = "Genomic.characterisation",
+               values_to = "Genomic.count")|> 
+  pivot_longer(cols = starts_with("consv"),
+               names_to = "Conservation",
+               values_to = "Consv.count") |>
+  #na.omit() |> 
+  #group_by(Seed.sources) |> 
+  #tally()
+  count(Species, Seed.sources, sort = TRUE)
 
 
