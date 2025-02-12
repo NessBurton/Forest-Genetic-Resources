@@ -1,12 +1,14 @@
 
 library(tidyverse)
 library(ggplot2)
-library(waffle)
+# library(waffle)
 library(ggtext)
-library(patchwork)
-library(paletteer)
-library(ggraph)
-library(igraph)
+# library(patchwork)
+# library(paletteer)
+# library(ggraph)
+# library(igraph)
+library(RColorBrewer)
+library(Polychrome)
 
 ### dirs -----------------------------------------------------------------------
 
@@ -217,6 +219,10 @@ df.FGR.summary <- df.FGR |>
          genomic.molecular, genomic.trial, genomic.none,
          consv.in.situ, consv.ex.situ, consv.none)
 
+# palette faff
+colorCount <- length(unique(df.FGR.summary$Species))
+getPalette <- colorRampPalette(brewer.pal(min(12, colorCount), "Paired"))
+
 # plot coverage of seed source types
 (p1 <- df.FGR.summary |> 
   pivot_longer(cols = starts_with("seed"),
@@ -226,9 +232,10 @@ df.FGR.summary <- df.FGR |>
   group_by(Seed.sources, Species) |> 
   tally() |> 
   ggplot()+
-  geom_col(aes(Seed.sources,n, fill = Species))+
-  theme_bw()+
-  coord_flip())
+    geom_col(aes(Seed.sources,n, fill = Species))+
+    scale_fill_manual(values = rev(getPalette(colorCount)), name = NULL) +
+    theme_bw()+
+    coord_flip())
 
 # plot coverage of whether or not species have genomic characterisation
 (p2 <- df.FGR.summary|> 
