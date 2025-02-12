@@ -9,6 +9,7 @@ library(ggtext)
 # library(igraph)
 library(RColorBrewer)
 library(Polychrome)
+library(forcats)
 library(plotly)
 library(htmlwidgets)
 
@@ -209,7 +210,7 @@ edges <- flare$edges
 df.FGR.summary <- df.FGR |> 
   mutate(seed.stands = ifelse(Seed.stands.count > 0, 1, NA),
          seed.orchards = ifelse(Seed.orchards.count > 0, 1, NA),
-         seed.none = ifelse(is.na(seed.stands & seed.orchards), 1, NA),
+         seed.none = ifelse(is.na(seed.stands) & is.na(seed.orchards), 1, NA),
          genomic.molecular = ifelse(Molecular.studies > 0, 1, NA),
          genomic.trial = ifelse(Common.garden.expts > 0, 1, NA),
          genomic.none = ifelse(is.na(genomic.molecular) & is.na(genomic.trial), 1, NA),
@@ -233,9 +234,10 @@ getPalette <- colorRampPalette(brewer.pal(min(12, colorCount), "Dark2"))
                names_to = "Seed.sources",
                values_to = "Source.count",
                values_drop_na = TRUE) |> 
-  group_by(Seed.sources, Species) |> 
-  tally() |> 
-  ggplot()+
+    mutate(Seed.sources = factor(Seed.sources, levels = c("seed.stands", "seed.orchards", "seed.none"))) |> 
+    group_by(Seed.sources, Species) |> 
+    tally() |> 
+    ggplot()+
     geom_col(aes(Seed.sources,n, fill = Species))+
     scale_fill_manual(values = rev(getPalette(colorCount)), name = NULL) +
     scale_x_discrete(labels=c("seed.stands"="Seed stand(s)", 
@@ -248,21 +250,21 @@ getPalette <- colorRampPalette(brewer.pal(min(12, colorCount), "Dark2"))
     coord_flip())
 
 # try ggplotly (converts to interactive)
-p1plotly <- ggplotly(p1, tooltip = c("Species"))
-# need to check count for none - some duplication
+(p1plotly <- ggplotly(p1, tooltip = c("Species")))
+# need to check count for none - some duplication - fixed, was back up in ifelse statements
 
 # save as html
 htmlwidgets::saveWidget(p1plotly, file = paste0(dirFigs,"seed_sources.html"))
 
 # plot coverage of whether or not species have genomic characterisation
 (p2 <- df.FGR.summary|> 
-  pivot_longer(cols = starts_with("genomic"),
+    pivot_longer(cols = starts_with("genomic"),
                names_to = "Genomic.characterisation",
                values_to = "Genomic.count",
                values_drop_na = TRUE)|>
-  group_by(Genomic.characterisation, Species) |> 
-  tally() |> 
-  #count(Source.count, sort = TRUE)
+    mutate(Genomic.characterisation = factor(Genomic.characterisation, levels = c("genomic.molecular", "genomic.trial", "genomic.none"))) |> 
+    group_by(Genomic.characterisation, Species) |> 
+    tally() |> 
     ggplot()+
     geom_col(aes(Genomic.characterisation,n, fill = Species))+
     scale_fill_manual(values = rev(getPalette(colorCount)), name = NULL) +
@@ -276,21 +278,33 @@ htmlwidgets::saveWidget(p1plotly, file = paste0(dirFigs,"seed_sources.html"))
     coord_flip())
 
 # ggplotly (converts to interactive)
-ggplotly(p2, tooltip = c("Species"))
+(p2plotly <- ggplotly(p2, tooltip = c("Species")))
+
+# save as html
+htmlwidgets::saveWidget(p2plotly, file = paste0(dirFigs,"genomic_characterisation.html"))
 
 # plot if species have material conserved either in-situ (GCUs) or ex-situ (seed banks)
 (p3 <- df.FGR.summary|> 
-  pivot_longer(cols = starts_with("consv"),
+    pivot_longer(cols = starts_with("consv"),
                names_to = "Conservation",
                values_to = "Consv.count",
-               values_drop_na = TRUE) |>
-  group_by(Conservation, Species) |> 
-  tally() |> 
-  ggplot()+
+               values_drop_na = TRUE) |>    
+    mutate(Conservation = factor(Conservation, levels = c("consv.in.situ", "consv.ex.situ", "consv.none"))) |>
+    group_by(Conservation, Species) |> 
+    tally() |> 
+    ggplot()+
     geom_col(aes(Conservation,n, fill = Species))+    
     scale_fill_manual(values = rev(getPalette(colorCount)), name = NULL) +
+    scale_x_discrete(labels=c("consv.in.situ"="In-situ (e.g. GCUs)", 
+                              "consv.ex.situ"="Ex-situ (e.g. seed banks)",
+                              "consv.none"="None"))+
     theme_bw()+
+    labs(x='Conservation of material',
+         y='Tree & shrub species count')+
     coord_flip())
 
 # ggplotly (converts to interactive)
-ggplotly(p3, tooltip = c("Species"))
+(p3plotly <- ggplotly(p3, tooltip = c("Species")))
+
+# save as html
+htmlwidgets::saveWidget(p3plotly, file = paste0(dirFigs,"conservation.html"))
