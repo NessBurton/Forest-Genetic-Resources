@@ -10,15 +10,17 @@ library(ggtext)
 library(RColorBrewer)
 library(Polychrome)
 library(plotly)
+library(htmlwidgets)
 
 ### dirs -----------------------------------------------------------------------
 
 wd <- "C:/Users/vbu/OneDrive - the Woodland Trust/Data-analysis/Forest-Genetic-Resources/"
 dirData <- paste0(wd,"data-raw/")
+dirFigs <- paste0(wd,"figures/")
 
 ### read in data ---------------------------------------------------------------
 
-df.FGR <- read.csv(paste0(dirData,"FGR_summary_figure2.csv"))
+df.FGR <- read.csv(paste0(dirData,"FGR_summary_figure2.csv")) # produced by Richard W.
 head(df.FGR)
 summary(df.FGR)
 str(df.FGR)
@@ -115,7 +117,7 @@ str(df.FGR)
 #   theme_minimal()
 
 
-### new type -------------------------------------------------------------------
+### circle packing -------------------------------------------------------------
 
 # example https://r-graph-gallery.com/313-basic-circle-packing-with-several-levels.html
 # We need a data frame giving a hierarchical structure. Let's consider the flare dataset:
@@ -201,7 +203,7 @@ edges <- flare$edges
 #   #facet_wrap(~Genomic.char)+
 #   theme_minimal()
 
-### v2 -------------------------------------------------------------------------
+### simple cols ----------------------------------------------------------------
 
 # convert to binary and select only the new columns
 df.FGR.summary <- df.FGR |> 
@@ -246,7 +248,11 @@ getPalette <- colorRampPalette(brewer.pal(min(12, colorCount), "Dark2"))
     coord_flip())
 
 # try ggplotly (converts to interactive)
-ggplotly(p1, tooltip = c("Species"))
+p1plotly <- ggplotly(p1, tooltip = c("Species"))
+# need to check count for none - some duplication
+
+# save as html
+htmlwidgets::saveWidget(p1plotly, file = paste0(dirFigs,"seed_sources.html"))
 
 # plot coverage of whether or not species have genomic characterisation
 (p2 <- df.FGR.summary|> 
