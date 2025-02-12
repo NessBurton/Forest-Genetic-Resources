@@ -9,6 +9,7 @@ library(ggtext)
 # library(igraph)
 library(RColorBrewer)
 library(Polychrome)
+library(plotly)
 
 ### dirs -----------------------------------------------------------------------
 
@@ -236,6 +237,9 @@ getPalette <- colorRampPalette(brewer.pal(min(12, colorCount), "Paired"))
     scale_fill_manual(values = rev(getPalette(colorCount)), name = NULL) +
     theme_bw()+
     coord_flip())
+
+# try ggplotly (converts to interactive)
+ggplotly(p1)
 
 # plot coverage of whether or not species have genomic characterisation
 (p2 <- df.FGR.summary|> 
