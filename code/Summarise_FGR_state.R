@@ -119,88 +119,88 @@ str(df.FGR)
 flare <- ggraph::flare
 edges <- flare$edges
 
-# Usually we associate another dataset that give information about each node of the dataset:
-vertices <- flare$vertices
-
-# Then we have to make a 'graph' object using the igraph library:
-mygraph <- graph_from_data_frame( edges, vertices=vertices )
-
-# Make the plot
-ggraph(mygraph, layout = 'circlepack') + 
-  geom_node_circle() +
-  theme_void()
-
-### convert df to edge list
-
-#e.g.
-#genomic.char - spp
-#no.char - spp
-#seed.stand.orchard - spp
-#seed.stand - spp
-#seed.orchard - spp
-
-str(df.FGR)
-FGR.summary <- df.FGR %>% 
-  group_by(Species) %>% 
-  summarise(Genomic.data1 = ifelse(Molecular.studies > 0 | Common.garden.expts > 0, 1, NA), # one source of genomic characterisation
-            Genomic.data2 = ifelse(Molecular.studies > 0 & Common.garden.expts > 0, 1, NA), # two sources of genomic charactertisation
-            Seed.source.1 = ifelse(Seed.stands.count > 0 | Seed.orchards.count > 0, 1, NA), # one type of seed source
-            Seed.source.2 = ifelse(Seed.stands.count > 0 & Seed.orchards.count > 0, 1, NA), # two types of seed source 
-            Total.seed.stands = ifelse(Seed.stands.count > 0 , sum(Seed.stands.count), NA),
-            Total.seed.orchards = ifelse(Seed.orchards.count > 0, sum(Seed.orchards.count), NA),
-            Conservation = ifelse(Gene.conservation.units > 0 & Ex.situ.germplasm > 0 | Gene.conservation.units > 0 & Ex.situ.collections.living > 0, "Both",
-                           ifelse(Ex.situ.germplasm >= 0 | Ex.situ.collections.living >= 0, "Ex-situ",
-                                  ifelse(Gene.conservation.units > 0, "In-situ", NA)))) %>% 
-  pivot_longer(cols = Genomic.data1:Seed.source.2,
-               names_to = "Type",
-               values_to = "Coverage")
-
-# make longer
-
-# FGR.edges <- FGR.summary %>% 
-#   pivot_longer(cols = Genomic.char:Seed.sources,
-#                names_to = "edges") %>% 
-#   mutate(value = NULL)
-# 
-# ### vertices - extra info
-# # spp - total count of stands/orchards
-# # spp - consv.status - in.situ/ex.situ/none
-# 
-# FGR.vertices <- FGR.edges[,c(1,2:3)]
-# 
-# FGR.edges <- FGR.edges %>% 
-#   mutate(Seed.sources.count = NULL,
-#          Consv = NULL)
-# 
-# colnames(FGR.edges) <- c("to","from")
-# colnames(FGR.vertices) <- c("name", "count", "conservation")
+# # Usually we associate another dataset that give information about each node of the dataset:
+# vertices <- flare$vertices
 # 
 # # Then we have to make a 'graph' object using the igraph library:
-# FGRgraph <- graph_from_data_frame(FGR.edges, vertices = FGR.vertices)
+# mygraph <- graph_from_data_frame( edges, vertices=vertices )
 # 
 # # Make the plot
-# ggraph(FGRgraph, layout = 'circlepack') + 
+# ggraph(mygraph, layout = 'circlepack') + 
 #   geom_node_circle() +
 #   theme_void()
-
-
-# simple option
-
-ggplot(FGR.summary)+#, 
-       #aes(Seed.sources, Species, fill = Conservation)) +
-  # This segment represents the vertical lines
-  #geom_segment(aes(x = Species, xend = Species, y = 0, yend = Seed.sources.count), linewidth = 1) +
-  # Add points on the end of each line
-  geom_col(aes(x = Species, y = Total.seed.stands, fill = Conservation)) +
-  #geom_text(data=label_data, aes(x=id, y=coverage+2, label=Species, hjust=hjust), color="black", fontface="bold",alpha=0.6, size=2.5, angle= label_data$angle, inherit.aes = FALSE ) +
-  #scale_color_paletteer_d(`"awtools::a_palette"`)+
-  coord_polar(start = 0)+
-  #facet_wrap(~Genomic.char)+
-  theme_minimal()
+# 
+# ### convert df to edge list
+# 
+# #e.g.
+# #genomic.char - spp
+# #no.char - spp
+# #seed.stand.orchard - spp
+# #seed.stand - spp
+# #seed.orchard - spp
+# 
+# str(df.FGR)
+# FGR.summary <- df.FGR %>% 
+#   group_by(Species) %>% 
+#   summarise(Genomic.data1 = ifelse(Molecular.studies > 0 | Common.garden.expts > 0, 1, NA), # one source of genomic characterisation
+#             Genomic.data2 = ifelse(Molecular.studies > 0 & Common.garden.expts > 0, 1, NA), # two sources of genomic charactertisation
+#             Seed.source.1 = ifelse(Seed.stands.count > 0 | Seed.orchards.count > 0, 1, NA), # one type of seed source
+#             Seed.source.2 = ifelse(Seed.stands.count > 0 & Seed.orchards.count > 0, 1, NA), # two types of seed source 
+#             Total.seed.stands = ifelse(Seed.stands.count > 0 , sum(Seed.stands.count), NA),
+#             Total.seed.orchards = ifelse(Seed.orchards.count > 0, sum(Seed.orchards.count), NA),
+#             Conservation = ifelse(Gene.conservation.units > 0 & Ex.situ.germplasm > 0 | Gene.conservation.units > 0 & Ex.situ.collections.living > 0, "Both",
+#                            ifelse(Ex.situ.germplasm >= 0 | Ex.situ.collections.living >= 0, "Ex-situ",
+#                                   ifelse(Gene.conservation.units > 0, "In-situ", NA)))) %>% 
+#   pivot_longer(cols = Genomic.data1:Seed.source.2,
+#                names_to = "Type",
+#                values_to = "Coverage")
+# 
+# # make longer
+# 
+# # FGR.edges <- FGR.summary %>% 
+# #   pivot_longer(cols = Genomic.char:Seed.sources,
+# #                names_to = "edges") %>% 
+# #   mutate(value = NULL)
+# # 
+# # ### vertices - extra info
+# # # spp - total count of stands/orchards
+# # # spp - consv.status - in.situ/ex.situ/none
+# # 
+# # FGR.vertices <- FGR.edges[,c(1,2:3)]
+# # 
+# # FGR.edges <- FGR.edges %>% 
+# #   mutate(Seed.sources.count = NULL,
+# #          Consv = NULL)
+# # 
+# # colnames(FGR.edges) <- c("to","from")
+# # colnames(FGR.vertices) <- c("name", "count", "conservation")
+# # 
+# # # Then we have to make a 'graph' object using the igraph library:
+# # FGRgraph <- graph_from_data_frame(FGR.edges, vertices = FGR.vertices)
+# # 
+# # # Make the plot
+# # ggraph(FGRgraph, layout = 'circlepack') + 
+# #   geom_node_circle() +
+# #   theme_void()
+# 
+# 
+# # simple option
+# 
+# ggplot(FGR.summary)+#, 
+#        #aes(Seed.sources, Species, fill = Conservation)) +
+#   # This segment represents the vertical lines
+#   #geom_segment(aes(x = Species, xend = Species, y = 0, yend = Seed.sources.count), linewidth = 1) +
+#   # Add points on the end of each line
+#   geom_col(aes(x = Species, y = Total.seed.stands, fill = Conservation)) +
+#   #geom_text(data=label_data, aes(x=id, y=coverage+2, label=Species, hjust=hjust), color="black", fontface="bold",alpha=0.6, size=2.5, angle= label_data$angle, inherit.aes = FALSE ) +
+#   #scale_color_paletteer_d(`"awtools::a_palette"`)+
+#   coord_polar(start = 0)+
+#   #facet_wrap(~Genomic.char)+
+#   theme_minimal()
 
 ### v2 -------------------------------------------------------------------------
 
-df.FGR |> 
+(p1 <- df.FGR |> 
   mutate(seed.stands = ifelse(Seed.stands.count > 0, 1, NA),
          seed.orchards = ifelse(Seed.orchards.count > 0, 1, NA),
          seed.none = ifelse(is.na(seed.stands & seed.orchards), 1, NA),
@@ -217,16 +217,64 @@ df.FGR |>
          consv.in.situ, consv.ex.situ, consv.none)|> 
   pivot_longer(cols = starts_with("seed"),
                names_to = "Seed.sources",
-               values_to = "Source.count") |> 
+               values_to = "Source.count",
+               values_drop_na = TRUE) |> 
+  group_by(Seed.sources, Species) |> 
+  tally() |> 
+  ggplot()+
+  geom_col(aes(Seed.sources,n, fill = Species))+
+  theme_bw()+
+  coord_flip())
+
+(p2 <- df.FGR |> 
+  mutate(seed.stands = ifelse(Seed.stands.count > 0, 1, NA),
+         seed.orchards = ifelse(Seed.orchards.count > 0, 1, NA),
+         seed.none = ifelse(is.na(seed.stands & seed.orchards), 1, NA),
+         genomic.molecular = ifelse(Molecular.studies > 0, 1, NA),
+         genomic.trial = ifelse(Common.garden.expts > 0, 1, NA),
+         genomic.none = ifelse(is.na(genomic.molecular) & is.na(genomic.trial), 1, NA),
+         consv.in.situ = ifelse(Gene.conservation.units > 0, 1, NA),
+         consv.ex.situ = ifelse(Ex.situ.germplasm >= 0 | Ex.situ.collections.living >= 0, 1, NA),
+         consv.both = ifelse(consv.in.situ > 0 & consv.ex.situ > 0, 1, NA),
+         consv.none = ifelse(is.na(consv.in.situ) & is.na(consv.ex.situ) & is.na(consv.both), 1, NA)) |> 
+  select(Species, 
+         seed.stands, seed.orchards, seed.none,
+         genomic.molecular, genomic.trial, genomic.none,
+         consv.in.situ, consv.ex.situ, consv.none)|> 
   pivot_longer(cols = starts_with("genomic"),
                names_to = "Genomic.characterisation",
-               values_to = "Genomic.count")|> 
+               values_to = "Genomic.count",
+               values_drop_na = TRUE)|>
+  group_by(Genomic.characterisation, Species) |> 
+  tally() |> 
+  #count(Source.count, sort = TRUE)
+  ggplot()+
+  geom_col(aes(Genomic.characterisation,n, fill = Species))+
+  theme_bw()+
+  coord_flip())
+
+(p3 <- df.FGR |> 
+  mutate(seed.stands = ifelse(Seed.stands.count > 0, 1, NA),
+         seed.orchards = ifelse(Seed.orchards.count > 0, 1, NA),
+         seed.none = ifelse(is.na(seed.stands & seed.orchards), 1, NA),
+         genomic.molecular = ifelse(Molecular.studies > 0, 1, NA),
+         genomic.trial = ifelse(Common.garden.expts > 0, 1, NA),
+         genomic.none = ifelse(is.na(genomic.molecular) & is.na(genomic.trial), 1, NA),
+         consv.in.situ = ifelse(Gene.conservation.units > 0, 1, NA),
+         consv.ex.situ = ifelse(Ex.situ.germplasm >= 0 | Ex.situ.collections.living >= 0, 1, NA),
+         consv.both = ifelse(consv.in.situ > 0 & consv.ex.situ > 0, 1, NA),
+         consv.none = ifelse(is.na(consv.in.situ) & is.na(consv.ex.situ) & is.na(consv.both), 1, NA)) |> 
+  select(Species, 
+         seed.stands, seed.orchards, seed.none,
+         genomic.molecular, genomic.trial, genomic.none,
+         consv.in.situ, consv.ex.situ, consv.none)|> 
   pivot_longer(cols = starts_with("consv"),
                names_to = "Conservation",
-               values_to = "Consv.count") |>
-  #na.omit() |> 
-  #group_by(Seed.sources) |> 
-  #tally()
-  count(Species, Seed.sources, sort = TRUE)
-
-
+               values_to = "Consv.count",
+               values_drop_na = TRUE) |>
+  group_by(Conservation, Species) |> 
+  tally() |> 
+  ggplot()+
+  geom_col(aes(Conservation,n, fill = Species))+
+  theme_bw()+
+  coord_flip())
