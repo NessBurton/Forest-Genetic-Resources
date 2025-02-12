@@ -200,7 +200,8 @@ edges <- flare$edges
 
 ### v2 -------------------------------------------------------------------------
 
-(p1 <- df.FGR |> 
+# convert to binary and select only the new columns
+df.FGR.summary <- df.FGR |> 
   mutate(seed.stands = ifelse(Seed.stands.count > 0, 1, NA),
          seed.orchards = ifelse(Seed.orchards.count > 0, 1, NA),
          seed.none = ifelse(is.na(seed.stands & seed.orchards), 1, NA),
@@ -214,7 +215,10 @@ edges <- flare$edges
   select(Species, 
          seed.stands, seed.orchards, seed.none,
          genomic.molecular, genomic.trial, genomic.none,
-         consv.in.situ, consv.ex.situ, consv.none)|> 
+         consv.in.situ, consv.ex.situ, consv.none)
+
+# plot coverage of seed source types
+(p1 <- df.FGR.summary |> 
   pivot_longer(cols = starts_with("seed"),
                names_to = "Seed.sources",
                values_to = "Source.count",
@@ -226,21 +230,8 @@ edges <- flare$edges
   theme_bw()+
   coord_flip())
 
-(p2 <- df.FGR |> 
-  mutate(seed.stands = ifelse(Seed.stands.count > 0, 1, NA),
-         seed.orchards = ifelse(Seed.orchards.count > 0, 1, NA),
-         seed.none = ifelse(is.na(seed.stands & seed.orchards), 1, NA),
-         genomic.molecular = ifelse(Molecular.studies > 0, 1, NA),
-         genomic.trial = ifelse(Common.garden.expts > 0, 1, NA),
-         genomic.none = ifelse(is.na(genomic.molecular) & is.na(genomic.trial), 1, NA),
-         consv.in.situ = ifelse(Gene.conservation.units > 0, 1, NA),
-         consv.ex.situ = ifelse(Ex.situ.germplasm >= 0 | Ex.situ.collections.living >= 0, 1, NA),
-         consv.both = ifelse(consv.in.situ > 0 & consv.ex.situ > 0, 1, NA),
-         consv.none = ifelse(is.na(consv.in.situ) & is.na(consv.ex.situ) & is.na(consv.both), 1, NA)) |> 
-  select(Species, 
-         seed.stands, seed.orchards, seed.none,
-         genomic.molecular, genomic.trial, genomic.none,
-         consv.in.situ, consv.ex.situ, consv.none)|> 
+# plot coverage of whether or not species have genomic characterisation
+(p2 <- df.FGR.summary|> 
   pivot_longer(cols = starts_with("genomic"),
                names_to = "Genomic.characterisation",
                values_to = "Genomic.count",
@@ -253,21 +244,8 @@ edges <- flare$edges
   theme_bw()+
   coord_flip())
 
-(p3 <- df.FGR |> 
-  mutate(seed.stands = ifelse(Seed.stands.count > 0, 1, NA),
-         seed.orchards = ifelse(Seed.orchards.count > 0, 1, NA),
-         seed.none = ifelse(is.na(seed.stands & seed.orchards), 1, NA),
-         genomic.molecular = ifelse(Molecular.studies > 0, 1, NA),
-         genomic.trial = ifelse(Common.garden.expts > 0, 1, NA),
-         genomic.none = ifelse(is.na(genomic.molecular) & is.na(genomic.trial), 1, NA),
-         consv.in.situ = ifelse(Gene.conservation.units > 0, 1, NA),
-         consv.ex.situ = ifelse(Ex.situ.germplasm >= 0 | Ex.situ.collections.living >= 0, 1, NA),
-         consv.both = ifelse(consv.in.situ > 0 & consv.ex.situ > 0, 1, NA),
-         consv.none = ifelse(is.na(consv.in.situ) & is.na(consv.ex.situ) & is.na(consv.both), 1, NA)) |> 
-  select(Species, 
-         seed.stands, seed.orchards, seed.none,
-         genomic.molecular, genomic.trial, genomic.none,
-         consv.in.situ, consv.ex.situ, consv.none)|> 
+# plot if species have material conserved either in-situ (GCUs) or ex-situ (seed banks)
+(p3 <- df.FGR.summary|> 
   pivot_longer(cols = starts_with("consv"),
                names_to = "Conservation",
                values_to = "Consv.count",
