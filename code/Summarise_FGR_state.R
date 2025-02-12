@@ -235,7 +235,13 @@ getPalette <- colorRampPalette(brewer.pal(min(12, colorCount), "Paired"))
   ggplot()+
     geom_col(aes(Seed.sources,n, fill = Species))+
     scale_fill_manual(values = rev(getPalette(colorCount)), name = NULL) +
+    scale_x_discrete(labels=c("seed.stands"="Seed stand(s)", 
+                              "seed.orchards"="Seed orchard(s)",
+                              "seed.none"="None"))+
     theme_bw()+
+    labs(x='Seed sources available',
+         y='Tree & shrub species count')+
+    theme(legend.position = "bottom")+
     coord_flip())
 
 # try ggplotly (converts to interactive)
