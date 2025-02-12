@@ -239,7 +239,7 @@ getPalette <- colorRampPalette(brewer.pal(min(12, colorCount), "Paired"))
     coord_flip())
 
 # try ggplotly (converts to interactive)
-ggplotly(p1)
+ggplotly(p1, tooltip = c("Species"))
 
 # plot coverage of whether or not species have genomic characterisation
 (p2 <- df.FGR.summary|> 
@@ -251,9 +251,13 @@ ggplotly(p1)
   tally() |> 
   #count(Source.count, sort = TRUE)
   ggplot()+
-  geom_col(aes(Genomic.characterisation,n, fill = Species))+
-  theme_bw()+
-  coord_flip())
+    geom_col(aes(Genomic.characterisation,n, fill = Species))+
+    scale_fill_manual(values = rev(getPalette(colorCount)), name = NULL) +
+    theme_bw()+
+    coord_flip())
+
+# ggplotly (converts to interactive)
+ggplotly(p2, tooltip = c("Species"))
 
 # plot if species have material conserved either in-situ (GCUs) or ex-situ (seed banks)
 (p3 <- df.FGR.summary|> 
@@ -264,6 +268,10 @@ ggplotly(p1)
   group_by(Conservation, Species) |> 
   tally() |> 
   ggplot()+
-  geom_col(aes(Conservation,n, fill = Species))+
-  theme_bw()+
-  coord_flip())
+    geom_col(aes(Conservation,n, fill = Species))+    
+    scale_fill_manual(values = rev(getPalette(colorCount)), name = NULL) +
+    theme_bw()+
+    coord_flip())
+
+# ggplotly (converts to interactive)
+ggplotly(p3, tooltip = c("Species"))
