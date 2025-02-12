@@ -222,7 +222,8 @@ df.FGR.summary <- df.FGR |>
 
 # palette faff
 colorCount <- length(unique(df.FGR.summary$Species))
-getPalette <- colorRampPalette(brewer.pal(min(12, colorCount), "Paired"))
+#getPalette <- colorRampPalette(brewer.pal(min(12, colorCount), "Paired"))
+getPalette <- colorRampPalette(brewer.pal(min(12, colorCount), "Dark2"))
 
 # plot coverage of seed source types
 (p1 <- df.FGR.summary |> 
@@ -256,10 +257,16 @@ ggplotly(p1, tooltip = c("Species"))
   group_by(Genomic.characterisation, Species) |> 
   tally() |> 
   #count(Source.count, sort = TRUE)
-  ggplot()+
+    ggplot()+
     geom_col(aes(Genomic.characterisation,n, fill = Species))+
     scale_fill_manual(values = rev(getPalette(colorCount)), name = NULL) +
+    scale_x_discrete(labels=c("genomic.trial"="Field trial(s)", 
+                              "genomic.molecular"="Molecular characterisation",
+                              "genomic.none"="None"))+
     theme_bw()+
+    labs(x='Genetic data available',
+         y='Tree & shrub species count')+
+    theme(legend.position = "bottom")+
     coord_flip())
 
 # ggplotly (converts to interactive)
